@@ -13,19 +13,7 @@ A collection of FPGA projects for learning, development, and hardware verificati
 
 ---
 
-## 🧩 SPI项目版本 · SPI Project Versions
 
-SPI 通信项目包含多个不同阶段或功能版本，用于记录设计逐步完善的过程。
-
-| 版本 Version | 说明 Description |
-|---|---|
-| Version 1 | 基础 SPI 通信版本 |
-| Version 2 | 改进版本 |
-| Version 3 | 进一步优化版本 |
-
-> 各版本的具体功能、通信速率和验证结果将在 SPI 项目目录中分别说明。
-
----
 
 ## 🛠️ 开发环境 · Development Environment
 
