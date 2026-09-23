@@ -8,10 +8,22 @@ A collection of FPGA projects for learning, development, and hardware verificati
 
 | 项目 Project | 开发平台 Platform | 开发环境 Dev Env | 核心技术 Tech |
 |---|---|---|---|
-| [1. 双脉冲测试 · Double-Pulse Test](./01-Double-Pulse-Test/) | FPGA | Vivado | PWM · 时序控制 · 双脉冲测试 |
-| 2. UART通信 · UART Communication | FPGA | Vivado | UART · FSM · 串行通信 |
-| 3. 异步FIFO · Asynchronous FIFO | FPGA | Vivado | FIFO · CDC · Gray Code |
-| 4. Zynq PS-PL通信 · Zynq PS-PL Communication | Zynq SoC | Vivado / Vitis | AXI · PS-PL · Embedded Linux |
+| [1. 双脉冲测试 · Double-Pulse Test](./01-Double-Pulse-Test/) | FPGA | Vivado | Double-Pulse · PWM · Timing Control |
+| [2. SPI通信 · SPI Communication](./02-SPI-Communication/) | FPGA | Vivado | SPI · FSM · 时序设计 · 数据收发 |
+
+---
+
+## 🧩 SPI项目版本 · SPI Project Versions
+
+SPI 通信项目包含多个不同阶段或功能版本，用于记录设计逐步完善的过程。
+
+| 版本 Version | 说明 Description |
+|---|---|
+| Version 1 | 基础 SPI 通信版本 |
+| Version 2 | 改进版本 |
+| Version 3 | 进一步优化版本 |
+
+> 各版本的具体功能、通信速率和验证结果将在 SPI 项目目录中分别说明。
 
 ---
 
@@ -21,20 +33,8 @@ A collection of FPGA projects for learning, development, and hardware verificati
 |---|---|
 | Vivado | FPGA设计、综合、实现和仿真 |
 | Verilog / SystemVerilog | RTL设计 |
-| ModelSim / Vivado Simulator | 功能仿真 |
+| Vivado Simulator / ModelSim | 功能仿真 |
 | ILA | FPGA在线逻辑调试 |
-| Vitis | Zynq软件开发 |
-
----
-
-## 🔧 硬件平台 · Hardware Platform
-
-| 硬件 Hardware | 型号 Model | 用途 Purpose |
-|---|---|---|
-| FPGA开发板 | 待填写 | FPGA项目开发 |
-| FPGA芯片 | 待填写 | RTL逻辑实现 |
-| USB-UART | 待填写 | 串口通信测试 |
-| 逻辑分析仪 | 待填写 | SPI / UART时序测试 |
 
 ---
 
@@ -45,15 +45,11 @@ FPGA-Projects/
 │
 ├── README.md
 │
-├── 01-SPI-High-Speed-Loopback/
-│   ├── README.md
-│   ├── rtl/
-│   ├── tb/
-│   ├── constraints/
-│   └── docs/
+├── 01-Double-Pulse-Test/
+│   └── README.md
 │
-├── 02-UART/
-│
-├── 03-Asynchronous-FIFO/
-│
-└── 04-Zynq-PS-PL/
+└── 02-SPI-Communication/
+    ├── README.md
+    ├── Version-1/
+    ├── Version-2/
+    └── Version-3/
