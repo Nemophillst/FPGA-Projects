@@ -13,8 +13,6 @@ A collection of FPGA projects for learning, development, and hardware verificati
 
 ---
 
-
-
 ## 🛠️ 开发环境 · Development Environment
 
 | 开发工具 Tool | 用途 Purpose |
@@ -32,12 +30,16 @@ A collection of FPGA projects for learning, development, and hardware verificati
 FPGA-Projects/
 │
 ├── README.md
+├── .gitignore
 │
 ├── 01-Double-Pulse-Test/
-│   └── README.md
+│   ├── README.md
+│   ├── 结果展示.docx
+│   └── double_pulse_project/
 │
 └── 02-SPI-Communication/
     ├── README.md
-    ├── Version-1/
-    ├── Version-2/
-    └── Version-3/
+    ├── 01-SPI-Basic/
+    ├── 02-SPI-25M/
+    ├── 03-SPI-80M/
+    └── 04-SPI-80M-External-Loopback/
