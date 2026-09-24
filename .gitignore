@@ -1,0 +1,44 @@
+# ==================================================
+# Xilinx Vivado generated files
+# ==================================================
+
+# Vivado temporary directory
+.Xil/
+
+# Vivado generated project directories
+*.cache/
+*.gen/
+*.hw/
+*.ip_user_files/
+*.runs/
+*.sim/
+
+# Vivado log / journal files
+*.jou
+*.log
+*.str
+
+# Simulation waveform database
+*.wdb
+
+# Temporary files
+*.tmp
+*.bak
+
+# ==================================================
+# Compressed backup files
+# ==================================================
+*.zip
+*.rar
+*.7z
+
+# ==================================================
+# Operating system / editor
+# ==================================================
+
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+.vscode/
+.idea/
