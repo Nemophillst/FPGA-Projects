@@ -9,7 +9,7 @@ A collection of FPGA projects for learning, development, and hardware verificati
 | 项目 Project | 开发平台 Platform | 开发环境 Dev Env | HDL / 核心技术 Tech |
 |---|---|---|---|
 | [1. 双脉冲测试 · Double-Pulse Test](./01-Double-Pulse-Test/) | FPGA | Vivado | Verilog · Double-Pulse · PWM · Timing Control |
-| [2. SPI通信 · SPI Communication](./02-SPI/) | FPGA | Vivado | VHDL / Verilog · SPI · FSM · 时序设计 · 数据收发 |
+| [2. SPI通信 · SPI Communication](./02-SPI%20Communication/) | FPGA | Vivado | VHDL / Verilog · SPI · FSM · 时序设计 · 数据收发 |
 
 ---
 
@@ -39,8 +39,6 @@ FPGA-Projects/
 │   └── results/
 │
 └── 02-SPI Communication/
-    ├── README.md
-    │
     └── 01-SPI_80M_EXTERNAL_LOOPBACK/
         ├── README.md
         ├── spi_project/
