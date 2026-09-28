@@ -188,12 +188,6 @@ architecture Behavioral of spi_top is
     signal rst_160_async_n :
         std_logic;
 
-    signal rst_160_ff1 :
-        std_logic := '0';
-
-    signal rst_160_ff2 :
-        std_logic := '0';
-
     signal core_rst_n_160 :
         std_logic;
 
@@ -421,18 +415,6 @@ architecture Behavioral of spi_top is
 
 
 
-    -- =================================================================
-    -- Reset synchronizer attributes
-    -- =================================================================
-    attribute ASYNC_REG : string;
-
-    attribute ASYNC_REG of rst_160_ff1 :
-        signal is "TRUE";
-
-    attribute ASYNC_REG of rst_160_ff2 :
-        signal is "TRUE";
-
-
 
 begin
 
@@ -487,36 +469,21 @@ begin
 
     -- =================================================================
     -- Reset synchronizer
+    --
+    -- Original two-stage reset synchronizer has been moved to
+    -- reset_sync.vhd.
     -- =================================================================
-    P_RESET_160 : process(
-        clk_spi_160,
-        rst_160_async_n
-    )
-    begin
+    U_RESET_SYNC : entity work.reset_sync
+        port map (
+            i_clk =>
+                clk_spi_160,
 
-        if rst_160_async_n = '0' then
+            i_async_n =>
+                rst_160_async_n,
 
-            rst_160_ff1 <=
-                '0';
-
-            rst_160_ff2 <=
-                '0';
-
-        elsif rising_edge(clk_spi_160) then
-
-            rst_160_ff1 <=
-                '1';
-
-            rst_160_ff2 <=
-                rst_160_ff1;
-
-        end if;
-
-    end process;
-
-
-    core_rst_n_160 <=
-        rst_160_ff2;
+            o_sync_n =>
+                core_rst_n_160
+        );
 
 
 
@@ -831,6 +798,7 @@ begin
 
                                 auto_slave_done_seen <=
                                     '0';
+
 
                                 frame_wait_count <=
                                     (others => '0');
@@ -1230,7 +1198,6 @@ begin
 
                                 auto_state <=
                                     AUTO_WAIT_FRAME;
-
 
 
                             else
