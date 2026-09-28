@@ -38,7 +38,7 @@ FPGA-Projects/
 │   ├── double_pulse_project/
 │   └── results/
 │
-└── 02-SPI/
+└── 02-SPI Communication/
     ├── README.md
     │
     └── 01-SPI_80M_EXTERNAL_LOOPBACK/
