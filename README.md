@@ -15,13 +15,13 @@ A collection of FPGA projects for learning, development, and hardware verificati
 
 ## 🛠️ 开发环境 · Development Environment
 
-| 开发工具 Tool | 用途 Purpose |
+| Tool | Purpose |
 |---|---|
-| Vivado | FPGA设计、综合、实现和仿真 |
-| Verilog / SystemVerilog | RTL设计 |
-| VHDL | RTL设计 |
-| Vivado Simulator / ModelSim | 功能仿真 |
-| ILA | FPGA在线逻辑调试 |
+| Vivado | FPGA设计、综合、实现和时序分析 |
+| Verilog / VHDL | RTL设计 |
+| Vivado Simulator | 功能仿真 |
+| ILA | 在线逻辑调试 |
+| VIO | 在线控制与状态观察 |
 
 ---
 
