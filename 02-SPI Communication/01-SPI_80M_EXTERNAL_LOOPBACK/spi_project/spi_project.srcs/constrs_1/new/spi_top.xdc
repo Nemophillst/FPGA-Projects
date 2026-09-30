@@ -24,11 +24,24 @@
 # 1. Board 50 MHz system clock
 #
 # 50 MHz period = 20 ns
+#
+# IMPORTANT:
+#
+# The Clock Wizard IP already constrains the 50 MHz input clock.
+#
+# Therefore DO NOT create sys_clk again here.
+#
+# Do NOT add:
+#
+# create_clock -period 20.000 \
+#     -name sys_clk \
+#     [get_ports sys_clk]
+#
+# Otherwise Vivado may report:
+#
+# [Constraints 18-619]
+# A clock with name 'sys_clk' already exists.
 # ============================================================
-
-create_clock -period 20.000 \
-    -name sys_clk \
-    [get_ports sys_clk]
 
 
 
@@ -228,6 +241,10 @@ create_generated_clock \
 # Vivado cannot automatically understand the external wire.
 #
 # Therefore constrain the returned input as an 80 MHz clock.
+#
+# 80 MHz:
+#
+#     Period = 12.5 ns
 # ============================================================
 
 create_clock \
@@ -304,6 +321,20 @@ set_false_path \
 #
 # We therefore treat the returned SCLK domain as asynchronous
 # relative to the internal MMCM clock group.
+#
+# NOTE:
+#
+# This restores the original hierarchy-based constraint
+# structure that was used before the later clock-object
+# experiment.
+#
+# Depending on Clock Wizard internal hierarchy optimization,
+# Vivado may still produce the original ordinary
+# "No pins matched" warning for these internal MMCM pins.
+#
+# It should NOT produce the later
+# [Vivado 12-4739] empty clock-group Critical Warning caused
+# by querying clk_out1_clk_wiz_0 / clk_out2_clk_wiz_0 too early.
 # ============================================================
 
 set_clock_groups -asynchronous \

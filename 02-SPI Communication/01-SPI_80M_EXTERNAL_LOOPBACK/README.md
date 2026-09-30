@@ -20,6 +20,8 @@ Master 和 Slave **不是直接在 FPGA 内部连线**，而是通过 FPGA IO �
 - 外部连线传播延迟
 - SCLK / MOSI / MISO 实际物理路径
 
+当前工程已经完成 RTL 模块化整理。
+
 当前稳定版本采用 **静态 Clock Wizard 相位配置**，最终选定的 MISO 采样相位为：
 
 ```text
@@ -36,6 +38,7 @@ Actual Phase = 236.25°
 
 | 项目 | 当前配置 |
 |---|---|
+| FPGA | xc7a35tfgg484-2 |
 | 系统输入时钟 | 50 MHz |
 | SPI 内部工作时钟 | 160 MHz |
 | SPI SCLK | 80 MHz |
@@ -52,6 +55,12 @@ Actual Phase = 236.25°
 Tbit = 1 / 80 MHz = 12.5 ns
 ```
 
+160 MHz 内部时钟周期为：
+
+```text
+Tclk = 1 / 160 MHz = 6.25 ns
+```
+
 ---
 
 ## 3. 最终验证结果
@@ -65,7 +74,7 @@ Tbit = 1 / 80 MHz = 12.5 ns
 | 207.00° | 不稳定，出现 Master RX 错误 |
 | 213.75° | 稳定 |
 | 225°附近 | 稳定 |
-| 236.25° | 稳定，最终候选 |
+| 236.25° | 稳定，最终选定 |
 | 245°附近 | 稳定 |
 | 252.00° | 稳定 |
 | 261.00° | 稳定 |
@@ -148,6 +157,8 @@ timeout_count      = 0
 
 因此当前版本在现有开发板、接线和工程实现条件下，已经达到 **上亿帧级连续零错误验证**。
 
+RTL 模块化完成后，工程重新完成了 Synthesis、Implementation、Timing、Bitstream 和实际上板测试，SPI 功能保持正常。
+
 ---
 
 ## 4. 外部 SPI 接线
@@ -186,20 +197,179 @@ J2 MISO IN   <---------------- J3 MISO OUT
 
 ## 5. 工程主要模块
 
+当前工程采用 RTL 模块化结构。
+
+当前主要模块关系：
+
+```text
+spi_top
+│
+├── U_CLK_WIZ
+│   └── clk_wiz_0
+│
+├── U_RESET_SYNC
+│   └── reset_sync.vhd
+│
+├── U_EDGE_DETECT
+│   └── edge_detect.vhd
+│
+├── U_TEST_CONTROLLER
+│   └── spi_test_controller.vhd
+│
+├── U_SPI_MASTER
+│   └── spi_master_core.vhd
+│
+├── U_SPI_SLAVE
+│   └── spi_slave_core.vhd
+│
+├── U_VIO
+│   └── vio_0
+│
+└── U_ILA
+    └── ila_0
+```
+
 ### `spi_top.vhd`
 
-顶层模块，主要负责：
+顶层模块。
+
+当前主要负责：
 
 - Clock Wizard 时钟连接
-- Reset 同步
+- Reset 模块连接
+- Edge Detect 模块连接
+- SPI Test Controller 连接
 - SPI Master / Slave 实例化
-- VIO 控制
-- ILA 观察
+- VIO 连接
+- ILA 连接
+- FPGA 外部 SPI IO 连接
+- 各模块之间的信号连接
+
+模块化以后，原来直接写在 `spi_top.vhd` 中的复位同步逻辑和测试控制逻辑已经拆分到独立模块中。
+
+因此当前 `spi_top.vhd` 主要负责：
+
+```text
+Top Level Integration
+```
+
+即整个工程的顶层模块连接。
+
+---
+
+### `reset_sync.vhd`
+
+复位同步模块。
+
+原来位于 `spi_top.vhd` 中的两级 Reset Synchronizer 已经拆分到该模块。
+
+主要作用：
+
+```text
+异步复位输入
+      ↓
+第一级同步触发器
+      ↓
+第二级同步触发器
+      ↓
+同步后的复位信号
+```
+
+当前采用：
+
+```text
+Asynchronous Assert
+Synchronous Release
+```
+
+即：
+
+- 复位可以异步立即生效
+- 解除复位经过时钟同步
+
+在顶层中的实例名：
+
+```text
+U_RESET_SYNC
+```
+
+---
+
+### `edge_detect.vhd`
+
+用于检测 VIO START：
+
+```text
+0 → 1
+```
+
+产生单周期启动事件。
+
+该启动事件送入：
+
+```text
+spi_test_controller
+```
+
+用于启动手动单帧测试或自动连续压力测试。
+
+在顶层中的实例名：
+
+```text
+U_EDGE_DETECT
+```
+
+---
+
+### `spi_test_controller.vhd`
+
+SPI 测试控制模块。
+
+该模块由原来 `spi_top.vhd` 中的测试控制逻辑拆分而来。
+
+主要负责：
+
 - 手动单帧测试
 - 自动连续压力测试
-- 数据比较
-- 错误计数
-- Timeout 处理
+- Master START 控制
+- Master TX 数据配置
+- Slave TX 数据配置
+- SPI Mode 配置
+- Clock Divider 配置
+- Master RX 数据比较
+- Slave RX 数据比较
+- Total Count
+- Master Error Count
+- Slave Error Count
+- Timeout Count
+- Master Error Pulse
+- Slave Error Pulse
+- Timeout Pulse
+- Timeout Recovery
+
+自动连续测试状态机包括：
+
+```text
+AUTO_IDLE
+    ↓
+AUTO_WAIT_FRAME
+    ↓
+AUTO_GAP
+    ↓
+下一帧
+```
+
+发生 Timeout 且 Master 仍然 Busy 时进入：
+
+```text
+AUTO_RECOVER
+```
+
+在顶层中的实例名：
+
+```text
+U_TEST_CONTROLLER
+```
 
 ---
 
@@ -221,9 +391,32 @@ TX Data
 组合成 8-bit RX Data
 ```
 
+主要输出：
+
+- SCLK
+- CS_N
+- MOSI
+- RX Data
+- Busy
+- Done
+
 80 MHz 下 MISO 是整个工程最敏感的时序路径。
 
 当前最终版本通过 **相移 160 MHz 时钟**调整 MISO 的实际采样位置。
+
+当前最终稳定相位：
+
+```text
+Actual Phase = 236.25°
+```
+
+模块化过程中没有修改已经验证成功的 SPI Master 高速时序核心。
+
+在顶层中的实例名：
+
+```text
+U_SPI_MASTER
+```
 
 ---
 
@@ -234,26 +427,24 @@ SPI Slave 核。
 主要负责：
 
 - 接收外部 SCLK
+- 接收外部 CS_N
 - 接收 MOSI
 - 输出 MISO
 - 8-bit 串并转换
 - RX Valid
 - Frame Error
 - Slave TX 数据准备
+- Debug 信号输出
 
 高速 MISO 调试过程中，Slave 的下一位数据准备时刻曾进行过提前调整，以增大 Master 端采样裕量。
 
----
+模块化过程中没有修改已经验证成功的 SPI Slave 高速时序核心。
 
-### `edge_detect.vhd`
-
-用于检测 VIO START：
+在顶层中的实例名：
 
 ```text
-0 → 1
+U_SPI_SLAVE
 ```
-
-产生单周期启动事件。
 
 ---
 
@@ -276,7 +467,11 @@ Clock Wizard
 - `clk_out1`：SPI 主逻辑时钟
 - `clk_out2`：MISO 相移采样相关时钟
 
-当前最终工程使用 **静态相位配置**。
+当前最终工程使用：
+
+```text
+Static Phase Configuration
+```
 
 ---
 
@@ -732,6 +927,8 @@ Program Device
 VIO / ILA
 ```
 
+RTL 模块化只是改变代码的组织方式，不改变 Vivado 后续的综合、实现和上板流程。
+
 ### Implementation 后必须检查
 
 至少确认：
@@ -745,6 +942,8 @@ THS = 0
 
 Failing Endpoints = 0
 ```
+
+当前模块化版本已经通过 Timing 检查。
 
 如果 Timing 未通过，不建议直接把该 Bitstream 当成可靠高速测试结果。
 
@@ -886,8 +1085,6 @@ Static Clock Wizard Phase
 
 ---
 
-
-
 ## 16. 当前项目结论
 
 当前工程已经实现：
@@ -914,6 +1111,18 @@ ILA抓波
 MISO静态相位扫描
 ```
 
+并已经完成 RTL 模块化：
+
+```text
+spi_top
+│
+├── reset_sync
+├── edge_detect
+├── spi_test_controller
+├── spi_master_core
+└── spi_slave_core
+```
+
 最终稳定配置：
 
 ```text
@@ -925,8 +1134,23 @@ Continuous Pattern = 00→FF / FF→00 complementary sequence
 
 已完成上亿帧量级连续零错误验证。
 
----
+当前模块化版本已经重新完成：
 
+```text
+Synthesis
+↓
+Implementation
+↓
+Timing Check
+↓
+Generate Bitstream
+↓
+Hardware Test
+```
+
+验证结果正常。
+
+---
 
 ## 17. 重要说明
 
@@ -969,3 +1193,5 @@ Hardware Stress Test
 ```
 
 不要直接假定原来的最佳相位仍然有效。
+
+当前工程以本 RTL 模块化版本作为稳定基线。
