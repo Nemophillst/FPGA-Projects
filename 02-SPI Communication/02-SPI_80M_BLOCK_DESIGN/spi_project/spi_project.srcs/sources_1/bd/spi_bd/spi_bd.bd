@@ -1,0 +1,1070 @@
+{
+  "design": {
+    "design_info": {
+      "boundary_crc": "0xE772083A1EA3CF36",
+      "device": "xc7a35tfgg484-2",
+      "gen_directory": "../../../../spi_project.gen/sources_1/bd/spi_bd",
+      "name": "spi_bd",
+      "rev_ctrl_bd_flag": "RevCtrlBdOff",
+      "synth_flow_mode": "Hierarchical",
+      "tool_version": "2024.1",
+      "validated": "true"
+    },
+    "design_tree": {
+      "reset_sync_0": "",
+      "edge_detect_0": "",
+      "spi_master_core_0": "",
+      "spi_slave_core_0": "",
+      "spi_test_controller_0": "",
+      "clk_wiz_0": "",
+      "vio_0": "",
+      "ila_0": "",
+      "util_vector_logic_0": "",
+      "util_vector_logic_1": "",
+      "util_vector_logic_2": "",
+      "miso_observer_0": ""
+    },
+    "ports": {
+      "sys_clk": {
+        "type": "clk",
+        "direction": "I",
+        "parameters": {
+          "CLK_DOMAIN": {
+            "value": "spi_bd_sys_clk",
+            "value_src": "default"
+          },
+          "FREQ_HZ": {
+            "value": "50000000"
+          },
+          "FREQ_TOLERANCE_HZ": {
+            "value": "0",
+            "value_src": "default"
+          },
+          "INSERT_VIP": {
+            "value": "0",
+            "value_src": "default"
+          },
+          "PHASE": {
+            "value": "0.0",
+            "value_src": "default"
+          }
+        }
+      },
+      "sys_rst_n": {
+        "type": "rst",
+        "direction": "I",
+        "parameters": {
+          "INSERT_VIP": {
+            "value": "0",
+            "value_src": "default"
+          },
+          "POLARITY": {
+            "value": "ACTIVE_LOW",
+            "value_src": "default"
+          }
+        }
+      },
+      "j2_sclk_out": {
+        "direction": "O"
+      },
+      "j2_cs_n_out": {
+        "direction": "O"
+      },
+      "j2_mosi_out": {
+        "direction": "O"
+      },
+      "j2_miso_in": {
+        "direction": "I"
+      },
+      "j3_sclk_in": {
+        "direction": "I"
+      },
+      "j3_cs_n_in": {
+        "direction": "I"
+      },
+      "j3_mosi_in": {
+        "direction": "I"
+      },
+      "j3_miso_out": {
+        "direction": "O"
+      }
+    },
+    "components": {
+      "reset_sync_0": {
+        "vlnv": "xilinx.com:module_ref:reset_sync:1.0",
+        "ip_revision": "1",
+        "xci_name": "spi_bd_reset_sync_0_0",
+        "xci_path": "ip\\spi_bd_reset_sync_0_0\\spi_bd_reset_sync_0_0.xci",
+        "inst_hier_path": "reset_sync_0",
+        "reference_info": {
+          "ref_type": "hdl",
+          "ref_name": "reset_sync",
+          "boundary_crc": "0x0"
+        },
+        "ports": {
+          "i_clk": {
+            "type": "clk",
+            "direction": "I",
+            "parameters": {
+              "FREQ_HZ": {
+                "value": "160000000",
+                "value_src": "ip_prop"
+              },
+              "PHASE": {
+                "value": "0.0",
+                "value_src": "ip_prop"
+              },
+              "CLK_DOMAIN": {
+                "value": "/clk_wiz_0_clk_out1",
+                "value_src": "ip_prop"
+              }
+            }
+          },
+          "i_async_n": {
+            "direction": "I",
+            "parameters": {
+              "PortType": {
+                "value": "rst",
+                "value_src": "ip_prop"
+              },
+              "PortType.PROP_SRC": {
+                "value": "false",
+                "value_src": "ip_prop"
+              },
+              "POLARITY": {
+                "value": "ACTIVE_LOW",
+                "value_src": "ip_prop"
+              }
+            }
+          },
+          "o_sync_n": {
+            "direction": "O"
+          }
+        }
+      },
+      "edge_detect_0": {
+        "vlnv": "xilinx.com:module_ref:edge_detect:1.0",
+        "ip_revision": "1",
+        "xci_name": "spi_bd_edge_detect_0_0",
+        "xci_path": "ip\\spi_bd_edge_detect_0_0\\spi_bd_edge_detect_0_0.xci",
+        "inst_hier_path": "edge_detect_0",
+        "reference_info": {
+          "ref_type": "hdl",
+          "ref_name": "edge_detect",
+          "boundary_crc": "0x0"
+        },
+        "ports": {
+          "i_clk": {
+            "type": "clk",
+            "direction": "I",
+            "parameters": {
+              "ASSOCIATED_RESET": {
+                "value": "i_rst_n",
+                "value_src": "constant"
+              },
+              "FREQ_HZ": {
+                "value": "160000000",
+                "value_src": "ip_prop"
+              },
+              "PHASE": {
+                "value": "0.0",
+                "value_src": "ip_prop"
+              },
+              "CLK_DOMAIN": {
+                "value": "/clk_wiz_0_clk_out1",
+                "value_src": "ip_prop"
+              }
+            }
+          },
+          "i_rst_n": {
+            "type": "rst",
+            "direction": "I",
+            "parameters": {
+              "POLARITY": {
+                "value": "ACTIVE_LOW",
+                "value_src": "constant"
+              }
+            }
+          },
+          "i_sig": {
+            "direction": "I"
+          },
+          "o_rise": {
+            "direction": "O"
+          }
+        }
+      },
+      "spi_master_core_0": {
+        "vlnv": "xilinx.com:module_ref:spi_master_core:1.0",
+        "ip_revision": "1",
+        "xci_name": "spi_bd_spi_master_core_0_0",
+        "xci_path": "ip\\spi_bd_spi_master_core_0_0\\spi_bd_spi_master_core_0_0.xci",
+        "inst_hier_path": "spi_master_core_0",
+        "reference_info": {
+          "ref_type": "hdl",
+          "ref_name": "spi_master_core",
+          "boundary_crc": "0x0"
+        },
+        "ports": {
+          "i_clk": {
+            "type": "clk",
+            "direction": "I",
+            "parameters": {
+              "ASSOCIATED_RESET": {
+                "value": "i_rst_n",
+                "value_src": "constant"
+              },
+              "FREQ_HZ": {
+                "value": "160000000",
+                "value_src": "ip_prop"
+              },
+              "PHASE": {
+                "value": "0.0",
+                "value_src": "ip_prop"
+              },
+              "CLK_DOMAIN": {
+                "value": "/clk_wiz_0_clk_out1",
+                "value_src": "ip_prop"
+              }
+            }
+          },
+          "i_clk_shift": {
+            "direction": "I",
+            "parameters": {
+              "FREQ_HZ": {
+                "value": "160000000",
+                "value_src": "ip_prop"
+              },
+              "PHASE": {
+                "value": "237.0",
+                "value_src": "ip_prop"
+              },
+              "CLK_DOMAIN": {
+                "value": "/clk_wiz_0_clk_out1",
+                "value_src": "ip_prop"
+              }
+            }
+          },
+          "i_rst_n": {
+            "type": "rst",
+            "direction": "I",
+            "parameters": {
+              "POLARITY": {
+                "value": "ACTIVE_LOW",
+                "value_src": "constant"
+              }
+            }
+          },
+          "i_start": {
+            "direction": "I"
+          },
+          "i_spi_mode": {
+            "direction": "I",
+            "left": "1",
+            "right": "0"
+          },
+          "i_clk_div": {
+            "direction": "I",
+            "left": "15",
+            "right": "0"
+          },
+          "i_tx_data": {
+            "direction": "I",
+            "left": "7",
+            "right": "0"
+          },
+          "i_miso": {
+            "direction": "I"
+          },
+          "o_sclk": {
+            "direction": "O"
+          },
+          "o_cs_n": {
+            "direction": "O"
+          },
+          "o_mosi": {
+            "direction": "O"
+          },
+          "o_rx_data": {
+            "direction": "O",
+            "left": "7",
+            "right": "0"
+          },
+          "o_busy": {
+            "direction": "O"
+          },
+          "o_done": {
+            "direction": "O"
+          }
+        }
+      },
+      "spi_slave_core_0": {
+        "vlnv": "xilinx.com:module_ref:spi_slave_core:1.0",
+        "ip_revision": "1",
+        "xci_name": "spi_bd_spi_slave_core_0_0",
+        "xci_path": "ip\\spi_bd_spi_slave_core_0_0\\spi_bd_spi_slave_core_0_0.xci",
+        "inst_hier_path": "spi_slave_core_0",
+        "reference_info": {
+          "ref_type": "hdl",
+          "ref_name": "spi_slave_core",
+          "boundary_crc": "0x0"
+        },
+        "ports": {
+          "i_clk": {
+            "type": "clk",
+            "direction": "I",
+            "parameters": {
+              "ASSOCIATED_RESET": {
+                "value": "i_rst_n",
+                "value_src": "constant"
+              },
+              "FREQ_HZ": {
+                "value": "160000000",
+                "value_src": "ip_prop"
+              },
+              "PHASE": {
+                "value": "0.0",
+                "value_src": "ip_prop"
+              },
+              "CLK_DOMAIN": {
+                "value": "/clk_wiz_0_clk_out1",
+                "value_src": "ip_prop"
+              }
+            }
+          },
+          "i_rst_n": {
+            "type": "rst",
+            "direction": "I",
+            "parameters": {
+              "POLARITY": {
+                "value": "ACTIVE_LOW",
+                "value_src": "constant"
+              }
+            }
+          },
+          "i_sclk": {
+            "direction": "I"
+          },
+          "i_cs_n": {
+            "direction": "I"
+          },
+          "i_mosi": {
+            "direction": "I"
+          },
+          "i_spi_mode": {
+            "direction": "I",
+            "left": "1",
+            "right": "0"
+          },
+          "i_tx_data": {
+            "direction": "I",
+            "left": "7",
+            "right": "0"
+          },
+          "o_miso": {
+            "direction": "O"
+          },
+          "o_rx_data": {
+            "direction": "O",
+            "left": "7",
+            "right": "0"
+          },
+          "o_rx_valid": {
+            "direction": "O"
+          },
+          "o_frame_error": {
+            "direction": "O"
+          },
+          "o_debug": {
+            "direction": "O",
+            "left": "7",
+            "right": "0"
+          }
+        }
+      },
+      "spi_test_controller_0": {
+        "vlnv": "xilinx.com:module_ref:spi_test_controller:1.0",
+        "ip_revision": "1",
+        "xci_name": "spi_bd_spi_test_controller_0_0",
+        "xci_path": "ip\\spi_bd_spi_test_controller_0_0\\spi_bd_spi_test_controller_0_0.xci",
+        "inst_hier_path": "spi_test_controller_0",
+        "reference_info": {
+          "ref_type": "hdl",
+          "ref_name": "spi_test_controller",
+          "boundary_crc": "0x0"
+        },
+        "ports": {
+          "i_clk": {
+            "type": "clk",
+            "direction": "I",
+            "parameters": {
+              "ASSOCIATED_RESET": {
+                "value": "i_rst_n",
+                "value_src": "constant"
+              },
+              "FREQ_HZ": {
+                "value": "160000000",
+                "value_src": "ip_prop"
+              },
+              "PHASE": {
+                "value": "0.0",
+                "value_src": "ip_prop"
+              },
+              "CLK_DOMAIN": {
+                "value": "/clk_wiz_0_clk_out1",
+                "value_src": "ip_prop"
+              }
+            }
+          },
+          "i_rst_n": {
+            "type": "rst",
+            "direction": "I",
+            "parameters": {
+              "POLARITY": {
+                "value": "ACTIVE_LOW",
+                "value_src": "constant"
+              }
+            }
+          },
+          "i_work_mode": {
+            "direction": "I",
+            "left": "1",
+            "right": "0"
+          },
+          "i_start_level": {
+            "direction": "I"
+          },
+          "i_start_rise": {
+            "direction": "I"
+          },
+          "i_master_tx": {
+            "direction": "I",
+            "left": "7",
+            "right": "0"
+          },
+          "i_slave_tx": {
+            "direction": "I",
+            "left": "7",
+            "right": "0"
+          },
+          "i_spi_mode": {
+            "direction": "I",
+            "left": "1",
+            "right": "0"
+          },
+          "i_clk_div": {
+            "direction": "I",
+            "left": "15",
+            "right": "0"
+          },
+          "i_master_rx_data": {
+            "direction": "I",
+            "left": "7",
+            "right": "0"
+          },
+          "i_master_busy": {
+            "direction": "I"
+          },
+          "i_master_done": {
+            "direction": "I"
+          },
+          "i_slave_rx_data": {
+            "direction": "I",
+            "left": "7",
+            "right": "0"
+          },
+          "i_slave_rx_valid": {
+            "direction": "I"
+          },
+          "o_master_start": {
+            "direction": "O"
+          },
+          "o_master_tx_cfg": {
+            "direction": "O",
+            "left": "7",
+            "right": "0"
+          },
+          "o_slave_tx_cfg": {
+            "direction": "O",
+            "left": "7",
+            "right": "0"
+          },
+          "o_spi_mode_cfg": {
+            "direction": "O",
+            "left": "1",
+            "right": "0"
+          },
+          "o_clk_div_cfg": {
+            "direction": "O",
+            "left": "15",
+            "right": "0"
+          },
+          "o_total_count": {
+            "direction": "O",
+            "left": "31",
+            "right": "0"
+          },
+          "o_master_error_count": {
+            "direction": "O",
+            "left": "31",
+            "right": "0"
+          },
+          "o_slave_error_count": {
+            "direction": "O",
+            "left": "31",
+            "right": "0"
+          },
+          "o_timeout_count": {
+            "direction": "O",
+            "left": "31",
+            "right": "0"
+          },
+          "o_master_error_pulse": {
+            "direction": "O"
+          },
+          "o_slave_error_pulse": {
+            "direction": "O"
+          },
+          "o_timeout_pulse": {
+            "direction": "O"
+          }
+        }
+      },
+      "clk_wiz_0": {
+        "vlnv": "xilinx.com:ip:clk_wiz:6.0",
+        "ip_revision": "14",
+        "xci_name": "spi_bd_clk_wiz_0_0",
+        "xci_path": "ip\\spi_bd_clk_wiz_0_0\\spi_bd_clk_wiz_0_0.xci",
+        "inst_hier_path": "clk_wiz_0",
+        "parameters": {
+          "CLKIN1_JITTER_PS": {
+            "value": "200.0"
+          },
+          "CLKOUT1_JITTER": {
+            "value": "575.295"
+          },
+          "CLKOUT1_PHASE_ERROR": {
+            "value": "919.522"
+          },
+          "CLKOUT1_REQUESTED_OUT_FREQ": {
+            "value": "160.000"
+          },
+          "CLKOUT2_JITTER": {
+            "value": "575.295"
+          },
+          "CLKOUT2_PHASE_ERROR": {
+            "value": "919.522"
+          },
+          "CLKOUT2_REQUESTED_OUT_FREQ": {
+            "value": "160.000"
+          },
+          "CLKOUT2_REQUESTED_PHASE": {
+            "value": "237.000"
+          },
+          "CLKOUT2_USED": {
+            "value": "true"
+          },
+          "MMCM_CLKFBOUT_MULT_F": {
+            "value": "64.000"
+          },
+          "MMCM_CLKIN1_PERIOD": {
+            "value": "20.000"
+          },
+          "MMCM_CLKIN2_PERIOD": {
+            "value": "10.000"
+          },
+          "MMCM_CLKOUT0_DIVIDE_F": {
+            "value": "4.000"
+          },
+          "MMCM_CLKOUT1_DIVIDE": {
+            "value": "4"
+          },
+          "MMCM_CLKOUT1_PHASE": {
+            "value": "236.250"
+          },
+          "MMCM_DIVCLK_DIVIDE": {
+            "value": "5"
+          },
+          "NUM_OUT_CLKS": {
+            "value": "2"
+          },
+          "PRIM_IN_FREQ": {
+            "value": "50.000"
+          }
+        }
+      },
+      "vio_0": {
+        "vlnv": "xilinx.com:ip:vio:3.0",
+        "ip_revision": "25",
+        "xci_name": "spi_bd_vio_0_0",
+        "xci_path": "ip\\spi_bd_vio_0_0\\spi_bd_vio_0_0.xci",
+        "inst_hier_path": "vio_0",
+        "parameters": {
+          "C_NUM_PROBE_IN": {
+            "value": "10"
+          },
+          "C_NUM_PROBE_OUT": {
+            "value": "7"
+          },
+          "C_PROBE_OUT1_WIDTH": {
+            "value": "2"
+          },
+          "C_PROBE_OUT3_WIDTH": {
+            "value": "8"
+          },
+          "C_PROBE_OUT4_WIDTH": {
+            "value": "8"
+          },
+          "C_PROBE_OUT5_WIDTH": {
+            "value": "2"
+          },
+          "C_PROBE_OUT6_WIDTH": {
+            "value": "16"
+          }
+        }
+      },
+      "ila_0": {
+        "vlnv": "xilinx.com:ip:ila:6.2",
+        "ip_revision": "15",
+        "xci_name": "spi_bd_ila_0_0",
+        "xci_path": "ip\\spi_bd_ila_0_0\\spi_bd_ila_0_0.xci",
+        "inst_hier_path": "ila_0",
+        "parameters": {
+          "C_DATA_DEPTH": {
+            "value": "2048"
+          },
+          "C_MONITOR_TYPE": {
+            "value": "Native"
+          },
+          "C_NUM_OF_PROBES": {
+            "value": "20"
+          },
+          "C_PROBE11_WIDTH": {
+            "value": "8"
+          },
+          "C_PROBE12_WIDTH": {
+            "value": "8"
+          },
+          "C_PROBE13_WIDTH": {
+            "value": "8"
+          },
+          "C_PROBE14_WIDTH": {
+            "value": "8"
+          },
+          "C_PROBE15_WIDTH": {
+            "value": "8"
+          }
+        }
+      },
+      "util_vector_logic_0": {
+        "vlnv": "xilinx.com:ip:util_vector_logic:2.0",
+        "ip_revision": "4",
+        "xci_name": "spi_bd_util_vector_logic_0_0",
+        "xci_path": "ip\\spi_bd_util_vector_logic_0_0\\spi_bd_util_vector_logic_0_0.xci",
+        "inst_hier_path": "util_vector_logic_0",
+        "parameters": {
+          "C_OPERATION": {
+            "value": "not"
+          },
+          "C_SIZE": {
+            "value": "1"
+          }
+        }
+      },
+      "util_vector_logic_1": {
+        "vlnv": "xilinx.com:ip:util_vector_logic:2.0",
+        "ip_revision": "4",
+        "xci_name": "spi_bd_util_vector_logic_1_0",
+        "xci_path": "ip\\spi_bd_util_vector_logic_1_0\\spi_bd_util_vector_logic_1_0.xci",
+        "inst_hier_path": "util_vector_logic_1",
+        "parameters": {
+          "C_SIZE": {
+            "value": "1"
+          }
+        }
+      },
+      "util_vector_logic_2": {
+        "vlnv": "xilinx.com:ip:util_vector_logic:2.0",
+        "ip_revision": "4",
+        "xci_name": "spi_bd_util_vector_logic_2_0",
+        "xci_path": "ip\\spi_bd_util_vector_logic_2_0\\spi_bd_util_vector_logic_2_0.xci",
+        "inst_hier_path": "util_vector_logic_2",
+        "parameters": {
+          "C_SIZE": {
+            "value": "1"
+          }
+        }
+      },
+      "miso_observer_0": {
+        "vlnv": "xilinx.com:module_ref:miso_observer:1.0",
+        "ip_revision": "1",
+        "xci_name": "spi_bd_miso_observer_0_0",
+        "xci_path": "ip\\spi_bd_miso_observer_0_0\\spi_bd_miso_observer_0_0.xci",
+        "inst_hier_path": "miso_observer_0",
+        "reference_info": {
+          "ref_type": "hdl",
+          "ref_name": "miso_observer",
+          "boundary_crc": "0x0"
+        },
+        "ports": {
+          "i_clk": {
+            "type": "clk",
+            "direction": "I",
+            "parameters": {
+              "FREQ_HZ": {
+                "value": "160000000",
+                "value_src": "ip_prop"
+              },
+              "PHASE": {
+                "value": "0.0",
+                "value_src": "ip_prop"
+              },
+              "CLK_DOMAIN": {
+                "value": "/clk_wiz_0_clk_out1",
+                "value_src": "ip_prop"
+              }
+            }
+          },
+          "i_clk_shift": {
+            "direction": "I",
+            "parameters": {
+              "FREQ_HZ": {
+                "value": "160000000",
+                "value_src": "ip_prop"
+              },
+              "PHASE": {
+                "value": "237.0",
+                "value_src": "ip_prop"
+              },
+              "CLK_DOMAIN": {
+                "value": "/clk_wiz_0_clk_out1",
+                "value_src": "ip_prop"
+              }
+            }
+          },
+          "i_miso": {
+            "direction": "I"
+          },
+          "o_sample_0": {
+            "direction": "O"
+          },
+          "o_sample_shift": {
+            "direction": "O"
+          }
+        }
+      }
+    },
+    "nets": {
+      "clk_in1_0_1": {
+        "ports": [
+          "sys_clk",
+          "clk_wiz_0/clk_in1"
+        ]
+      },
+      "clk_wiz_0_clk_out1": {
+        "ports": [
+          "clk_wiz_0/clk_out1",
+          "spi_master_core_0/i_clk",
+          "spi_slave_core_0/i_clk",
+          "edge_detect_0/i_clk",
+          "spi_test_controller_0/i_clk",
+          "reset_sync_0/i_clk",
+          "vio_0/clk",
+          "ila_0/clk",
+          "miso_observer_0/i_clk"
+        ]
+      },
+      "clk_wiz_0_clk_out2": {
+        "ports": [
+          "clk_wiz_0/clk_out2",
+          "spi_master_core_0/i_clk_shift",
+          "miso_observer_0/i_clk_shift"
+        ]
+      },
+      "clk_wiz_0_locked": {
+        "ports": [
+          "clk_wiz_0/locked",
+          "util_vector_logic_2/Op2"
+        ]
+      },
+      "edge_detect_0_o_rise": {
+        "ports": [
+          "edge_detect_0/o_rise",
+          "spi_test_controller_0/i_start_rise"
+        ]
+      },
+      "j2_miso_in_1": {
+        "ports": [
+          "j2_miso_in",
+          "spi_master_core_0/i_miso",
+          "miso_observer_0/i_miso",
+          "ila_0/probe3"
+        ]
+      },
+      "j3_cs_n_in_1": {
+        "ports": [
+          "j3_cs_n_in",
+          "spi_slave_core_0/i_cs_n",
+          "ila_0/probe1"
+        ]
+      },
+      "j3_mosi_in_1": {
+        "ports": [
+          "j3_mosi_in",
+          "spi_slave_core_0/i_mosi",
+          "ila_0/probe2"
+        ]
+      },
+      "j3_sclk_in_1": {
+        "ports": [
+          "j3_sclk_in",
+          "spi_slave_core_0/i_sclk",
+          "ila_0/probe0"
+        ]
+      },
+      "miso_observer_0_o_sample_0": {
+        "ports": [
+          "miso_observer_0/o_sample_0",
+          "ila_0/probe4"
+        ]
+      },
+      "miso_observer_0_o_sample_shift": {
+        "ports": [
+          "miso_observer_0/o_sample_shift",
+          "ila_0/probe5"
+        ]
+      },
+      "reset_sync_0_o_sync_n": {
+        "ports": [
+          "reset_sync_0/o_sync_n",
+          "edge_detect_0/i_rst_n",
+          "spi_test_controller_0/i_rst_n",
+          "spi_master_core_0/i_rst_n",
+          "spi_slave_core_0/i_rst_n"
+        ]
+      },
+      "spi_master_core_0_o_busy": {
+        "ports": [
+          "spi_master_core_0/o_busy",
+          "spi_test_controller_0/i_master_busy",
+          "vio_0/probe_in2",
+          "ila_0/probe8"
+        ]
+      },
+      "spi_master_core_0_o_cs_n": {
+        "ports": [
+          "spi_master_core_0/o_cs_n",
+          "j2_cs_n_out",
+          "ila_0/probe7"
+        ]
+      },
+      "spi_master_core_0_o_done": {
+        "ports": [
+          "spi_master_core_0/o_done",
+          "spi_test_controller_0/i_master_done",
+          "vio_0/probe_in3",
+          "ila_0/probe9"
+        ]
+      },
+      "spi_master_core_0_o_mosi": {
+        "ports": [
+          "spi_master_core_0/o_mosi",
+          "j2_mosi_out"
+        ]
+      },
+      "spi_master_core_0_o_rx_data": {
+        "ports": [
+          "spi_master_core_0/o_rx_data",
+          "spi_test_controller_0/i_master_rx_data",
+          "vio_0/probe_in0",
+          "ila_0/probe13"
+        ]
+      },
+      "spi_master_core_0_o_sclk": {
+        "ports": [
+          "spi_master_core_0/o_sclk",
+          "j2_sclk_out",
+          "ila_0/probe6"
+        ]
+      },
+      "spi_slave_core_0_o_debug": {
+        "ports": [
+          "spi_slave_core_0/o_debug",
+          "ila_0/probe15"
+        ]
+      },
+      "spi_slave_core_0_o_frame_error": {
+        "ports": [
+          "spi_slave_core_0/o_frame_error",
+          "vio_0/probe_in5",
+          "ila_0/probe16"
+        ]
+      },
+      "spi_slave_core_0_o_miso": {
+        "ports": [
+          "spi_slave_core_0/o_miso",
+          "j3_miso_out"
+        ]
+      },
+      "spi_slave_core_0_o_rx_data": {
+        "ports": [
+          "spi_slave_core_0/o_rx_data",
+          "spi_test_controller_0/i_slave_rx_data",
+          "vio_0/probe_in1",
+          "ila_0/probe14"
+        ]
+      },
+      "spi_slave_core_0_o_rx_valid": {
+        "ports": [
+          "spi_slave_core_0/o_rx_valid",
+          "spi_test_controller_0/i_slave_rx_valid",
+          "vio_0/probe_in4",
+          "ila_0/probe10"
+        ]
+      },
+      "spi_test_controller_0_o_clk_div_cfg": {
+        "ports": [
+          "spi_test_controller_0/o_clk_div_cfg",
+          "spi_master_core_0/i_clk_div"
+        ]
+      },
+      "spi_test_controller_0_o_master_error_count": {
+        "ports": [
+          "spi_test_controller_0/o_master_error_count",
+          "vio_0/probe_in7"
+        ]
+      },
+      "spi_test_controller_0_o_master_error_pulse": {
+        "ports": [
+          "spi_test_controller_0/o_master_error_pulse",
+          "ila_0/probe17"
+        ]
+      },
+      "spi_test_controller_0_o_master_start": {
+        "ports": [
+          "spi_test_controller_0/o_master_start",
+          "spi_master_core_0/i_start"
+        ]
+      },
+      "spi_test_controller_0_o_master_tx_cfg": {
+        "ports": [
+          "spi_test_controller_0/o_master_tx_cfg",
+          "spi_master_core_0/i_tx_data",
+          "ila_0/probe11"
+        ]
+      },
+      "spi_test_controller_0_o_slave_error_count": {
+        "ports": [
+          "spi_test_controller_0/o_slave_error_count",
+          "vio_0/probe_in8"
+        ]
+      },
+      "spi_test_controller_0_o_slave_error_pulse": {
+        "ports": [
+          "spi_test_controller_0/o_slave_error_pulse",
+          "ila_0/probe18"
+        ]
+      },
+      "spi_test_controller_0_o_slave_tx_cfg": {
+        "ports": [
+          "spi_test_controller_0/o_slave_tx_cfg",
+          "spi_slave_core_0/i_tx_data",
+          "ila_0/probe12"
+        ]
+      },
+      "spi_test_controller_0_o_spi_mode_cfg": {
+        "ports": [
+          "spi_test_controller_0/o_spi_mode_cfg",
+          "spi_slave_core_0/i_spi_mode",
+          "spi_master_core_0/i_spi_mode"
+        ]
+      },
+      "spi_test_controller_0_o_timeout_count": {
+        "ports": [
+          "spi_test_controller_0/o_timeout_count",
+          "vio_0/probe_in9"
+        ]
+      },
+      "spi_test_controller_0_o_timeout_pulse": {
+        "ports": [
+          "spi_test_controller_0/o_timeout_pulse",
+          "ila_0/probe19"
+        ]
+      },
+      "spi_test_controller_0_o_total_count": {
+        "ports": [
+          "spi_test_controller_0/o_total_count",
+          "vio_0/probe_in6"
+        ]
+      },
+      "sys_rst_n_1": {
+        "ports": [
+          "sys_rst_n",
+          "util_vector_logic_0/Op1",
+          "util_vector_logic_1/Op1"
+        ]
+      },
+      "util_vector_logic_0_Res": {
+        "ports": [
+          "util_vector_logic_0/Res",
+          "clk_wiz_0/reset"
+        ]
+      },
+      "util_vector_logic_1_Res": {
+        "ports": [
+          "util_vector_logic_1/Res",
+          "util_vector_logic_2/Op1"
+        ]
+      },
+      "util_vector_logic_2_Res": {
+        "ports": [
+          "util_vector_logic_2/Res",
+          "reset_sync_0/i_async_n"
+        ]
+      },
+      "vio_0_probe_out0": {
+        "ports": [
+          "vio_0/probe_out0",
+          "util_vector_logic_1/Op2"
+        ]
+      },
+      "vio_0_probe_out1": {
+        "ports": [
+          "vio_0/probe_out1",
+          "spi_test_controller_0/i_work_mode"
+        ]
+      },
+      "vio_0_probe_out2": {
+        "ports": [
+          "vio_0/probe_out2",
+          "edge_detect_0/i_sig",
+          "spi_test_controller_0/i_start_level"
+        ]
+      },
+      "vio_0_probe_out3": {
+        "ports": [
+          "vio_0/probe_out3",
+          "spi_test_controller_0/i_master_tx"
+        ]
+      },
+      "vio_0_probe_out4": {
+        "ports": [
+          "vio_0/probe_out4",
+          "spi_test_controller_0/i_slave_tx"
+        ]
+      },
+      "vio_0_probe_out5": {
+        "ports": [
+          "vio_0/probe_out5",
+          "spi_test_controller_0/i_spi_mode"
+        ]
+      },
+      "vio_0_probe_out6": {
+        "ports": [
+          "vio_0/probe_out6",
+          "spi_test_controller_0/i_clk_div"
+        ]
+      }
+    }
+  }
+}

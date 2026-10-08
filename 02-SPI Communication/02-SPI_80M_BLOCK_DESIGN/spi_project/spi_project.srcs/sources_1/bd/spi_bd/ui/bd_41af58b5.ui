@@ -1,0 +1,80 @@
+{
+   "ActiveEmotionalView":"Default View",
+   "Default View_ScaleFactor":"0.339048",
+   "Default View_TopLeft":"-537,-1026",
+   "ExpandedHierarchyInLayout":"",
+   "guistr":"# # String gsaved with Nlview 7.7.1 2023-07-26 3bc4126617 VDI=43 GEI=38 GUI=JA:21.0
+#  -string -flagsOSRD
+preplace port port-id_sys_clk -pg 1 -lvl 0 -x -420 -y -130 -defaultsOSRD
+preplace port port-id_sys_rst_n -pg 1 -lvl 0 -x -420 -y -280 -defaultsOSRD
+preplace port port-id_j2_sclk_out -pg 1 -lvl 6 -x 1960 -y 30 -defaultsOSRD
+preplace port port-id_j2_cs_n_out -pg 1 -lvl 6 -x 1960 -y 50 -defaultsOSRD
+preplace port port-id_j2_mosi_out -pg 1 -lvl 6 -x 1960 -y 80 -defaultsOSRD
+preplace port port-id_j2_miso_in -pg 1 -lvl 0 -x -420 -y 460 -defaultsOSRD
+preplace port port-id_j3_sclk_in -pg 1 -lvl 0 -x -420 -y 490 -defaultsOSRD
+preplace port port-id_j3_cs_n_in -pg 1 -lvl 0 -x -420 -y 530 -defaultsOSRD
+preplace port port-id_j3_mosi_in -pg 1 -lvl 0 -x -420 -y 560 -defaultsOSRD
+preplace port port-id_j3_miso_out -pg 1 -lvl 6 -x 1960 -y 110 -defaultsOSRD
+preplace inst reset_sync_0 -pg 1 -lvl 5 -x 1730 -y -230 -defaultsOSRD
+preplace inst edge_detect_0 -pg 1 -lvl 2 -x 520 -y 40 -defaultsOSRD
+preplace inst spi_master_core_0 -pg 1 -lvl 4 -x 1290 -y 200 -defaultsOSRD
+preplace inst spi_slave_core_0 -pg 1 -lvl 4 -x 1290 -y 450 -defaultsOSRD
+preplace inst spi_test_controller_0 -pg 1 -lvl 2 -x 520 -y 390 -defaultsOSRD
+preplace inst clk_wiz_0 -pg 1 -lvl 1 -x -70 -y -140 -defaultsOSRD
+preplace inst vio_0 -pg 1 -lvl 1 -x -70 -y 220 -defaultsOSRD
+preplace inst ila_0 -pg 1 -lvl 5 -x 1730 -y 350 -defaultsOSRD
+preplace inst util_vector_logic_0 -pg 1 -lvl 1 -x -70 -y -310 -defaultsOSRD
+preplace inst util_vector_logic_1 -pg 1 -lvl 2 -x 520 -y -230 -defaultsOSRD
+preplace inst util_vector_logic_2 -pg 1 -lvl 4 -x 1290 -y -220 -defaultsOSRD
+preplace inst miso_observer_0 -pg 1 -lvl 3 -x 920 -y -460 -defaultsOSRD
+preplace netloc clk_in1_0_1 1 0 1 N -130
+preplace netloc clk_wiz_0_clk_out1 1 0 5 -230 60 290 -160 730 -160 1120 -150 1610
+preplace netloc clk_wiz_0_clk_out2 1 1 3 N -140 790 -80 1140
+preplace netloc clk_wiz_0_locked 1 1 3 90 -150 720 -210 N
+preplace netloc edge_detect_0_o_rise 1 1 2 320 -40 720
+preplace netloc j2_miso_in_1 1 0 5 -400J -60 120J -70 780 -70 1110 30 1580
+preplace netloc j3_cs_n_in_1 1 0 5 NJ 530 90J 580 780 540 1080 50 1540
+preplace netloc j3_mosi_in_1 1 0 5 NJ 560 80J 600 790 550 1070 40 1570
+preplace netloc j3_sclk_in_1 1 0 5 NJ 490 100J 590 770 530 1090 60 1560
+preplace netloc reset_sync_0_o_sync_n 1 1 5 310 -60 N -60 1130 -140 NJ -140 1850J
+preplace netloc spi_master_core_0_o_busy 1 0 5 -230 460 310 650 NJ 650 N 650 1480
+preplace netloc spi_master_core_0_o_cs_n 1 4 2 1550 50 NJ
+preplace netloc spi_master_core_0_o_done 1 0 5 -260 480 290 660 NJ 660 N 660 1470
+preplace netloc spi_master_core_0_o_mosi 1 4 2 1500 80 NJ
+preplace netloc spi_master_core_0_o_rx_data 1 0 5 -300 440 300 670 NJ 670 N 670 1500
+preplace netloc spi_master_core_0_o_sclk 1 4 2 1600 30 NJ
+preplace netloc spi_slave_core_0_o_frame_error 1 0 5 -270 680 NJ 680 NJ 680 N 680 1440
+preplace netloc spi_slave_core_0_o_miso 1 4 2 1510 90 1850J
+preplace netloc spi_slave_core_0_o_rx_data 1 0 5 -280 500 270 690 NJ 690 N 690 1490
+preplace netloc spi_slave_core_0_o_rx_valid 1 0 5 -290 520 280 610 NJ 610 N 610 1460
+preplace netloc spi_test_controller_0_o_clk_div_cfg 1 2 2 780 230 N
+preplace netloc spi_test_controller_0_o_master_error_count 1 0 3 -220 620 NJ 620 740
+preplace netloc spi_test_controller_0_o_master_start 1 2 2 740 190 N
+preplace netloc spi_test_controller_0_o_master_tx_cfg 1 2 3 N 300 1100 70 1520
+preplace netloc spi_test_controller_0_o_slave_error_count 1 0 3 -240 630 NJ 630 730
+preplace netloc spi_test_controller_0_o_slave_tx_cfg 1 2 3 N 320 1060 580 1550
+preplace netloc spi_test_controller_0_o_spi_mode_cfg 1 2 2 N 340 1140
+preplace netloc spi_test_controller_0_o_timeout_count 1 0 3 -250 640 NJ 640 720
+preplace netloc spi_test_controller_0_o_total_count 1 0 3 -240 -50 NJ -50 730
+preplace netloc sys_rst_n_1 1 0 2 -310 -370 100
+preplace netloc util_vector_logic_0_Res 1 0 2 -310 -250 90
+preplace netloc util_vector_logic_1_Res 1 2 2 N -230 N
+preplace netloc util_vector_logic_2_Res 1 4 1 N -220
+preplace netloc vio_0_probe_out0 1 1 1 100 -220n
+preplace netloc vio_0_probe_out1 1 1 1 120 180n
+preplace netloc vio_0_probe_out2 1 1 1 300 60n
+preplace netloc vio_0_probe_out3 1 1 1 110 220n
+preplace netloc vio_0_probe_out4 1 1 1 100 240n
+preplace netloc vio_0_probe_out5 1 1 1 90 260n
+preplace netloc vio_0_probe_out6 1 1 1 80 280n
+preplace netloc miso_observer_0_o_sample_0 1 3 2 NJ -470 1590
+preplace netloc miso_observer_0_o_sample_shift 1 3 2 NJ -450 1530
+preplace netloc spi_slave_core_0_o_debug 1 4 1 1510 470n
+preplace netloc spi_test_controller_0_o_master_error_pulse 1 2 3 790J 330 NJ 330 1450
+preplace netloc spi_test_controller_0_o_slave_error_pulse 1 2 3 760J 560 1050J 590 1610
+preplace netloc spi_test_controller_0_o_timeout_pulse 1 2 3 750J 570 NJ 570 1600
+levelinfo -pg 1 -420 -70 520 920 1290 1730 1960
+pagesize -pg 1 -db -bbox -sgen -540 -1060 2090 770
+"
+}
+0
