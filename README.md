@@ -14,15 +14,6 @@ A collection of FPGA projects for learning, development, and hardware verificati
 
 ---
 
-## 📡 SPI项目 · SPI Projects
-
-| 项目 Project | 开发环境 Dev Env | 核心技术 Tech |
-|---|---|---|
-| [02-01. SPI 80M External Loopback](./02-SPI%20Communication/01-SPI_80M_EXTERNAL_LOOPBACK/) | Vivado | VHDL · SPI · 80 MHz · External Loopback · VIO / ILA |
-| [02-02. SPI 80M Block Design](./02-SPI%20Communication/02-SPI_80M_BLOCK_DESIGN/) | Vivado | VHDL · SPI · 80 MHz · Block Design |
-
----
-
 ## 🛠️ 开发环境 · Development Environment
 
 | Tool | Purpose |
