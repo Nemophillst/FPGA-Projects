@@ -1,53 +1,157 @@
 
-name: Update SPI 80M External Loopback ZIP
+name: Update FPGA Project ZIPs
+
+# Automatically update the corresponding Release ZIP
+# when a project is pushed to main.
 
 on:
   push:
     branches:
       - main
     paths:
+      - '01-Double-Pulse-Test/**'
       - '02-SPI Communication/01-SPI_80M_EXTERNAL_LOOPBACK/**'
+      - '02-SPI Communication/02-SPI_80M_BLOCK_DESIGN/**'
 
+  # Manual trigger: update all three projects
   workflow_dispatch:
 
 permissions:
   contents: write
 
-concurrency:
-  group: spi-80m-external-loopback-release
-  cancel-in-progress: false
-
 jobs:
-  update-zip:
+  update-project-zip:
+    name: ${{ matrix.name }}
     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
 
-      - name: Create project ZIP
+          # 01. Double-Pulse Test
+          - name: Double-Pulse Test
+            project: '01-Double-Pulse-Test'
+            tag: '01-Double-Pulse-Test'
+            zip: '01-Double-Pulse-Test.zip'
+
+          # 02-01. SPI 80M External Loopback
+          - name: SPI 80M External Loopback
+            project: '02-SPI Communication/01-SPI_80M_EXTERNAL_LOOPBACK'
+            tag: '02-01-SPI_80M_EXTERNAL_LOOPBACK'
+            zip: '01-SPI_80M_EXTERNAL_LOOPBACK.zip'
+
+          # 02-02. SPI 80M Block Design
+          - name: SPI 80M Block Design
+            project: '02-SPI Communication/02-SPI_80M_BLOCK_DESIGN'
+            tag: '02-02-SPI_80M_BLOCK_DESIGN'
+            zip: '02-SPI_80M_BLOCK_DESIGN.zip'
+
+    # Prevent simultaneous replacement of the same ZIP
+    concurrency:
+      group: fpga-release-${{ matrix.tag }}
+      cancel-in-progress: false
+
+    steps:
+
+      # ------------------------------------------------
+      # Step 1: Checkout repository
+      # ------------------------------------------------
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          ref: main
+          fetch-depth: 0
+
+      # ------------------------------------------------
+      # Step 2: Check whether this project was changed
+      # ------------------------------------------------
+      - name: Detect project changes
+        id: changes
         shell: bash
+        env:
+          PROJECT_PATH: ${{ matrix.project }}
+          BEFORE_SHA: ${{ github.event.before }}
         run: |
           set -euo pipefail
 
-          PROJECT="01-SPI_80M_EXTERNAL_LOOPBACK"
-          PARENT="02-SPI Communication"
+          if [[ "$GITHUB_EVENT_NAME" == "workflow_dispatch" ]]; then
+            CHANGED=true
 
-          test -f "$PARENT/$PROJECT/spi_project/spi_project.xpr"
+          elif [[ -z "$BEFORE_SHA" || "$BEFORE_SHA" =~ ^0+$ ]]; then
+            CHANGED=true
+
+          else
+            CHANGED_FILES="$(git diff --name-only \
+              "$BEFORE_SHA" "$GITHUB_SHA" \
+              -- "$PROJECT_PATH")"
+
+            if [[ -n "$CHANGED_FILES" ]]; then
+              CHANGED=true
+            else
+              CHANGED=false
+            fi
+          fi
+
+          echo "changed=$CHANGED" >> "$GITHUB_OUTPUT"
+          echo "Project changed: $CHANGED"
+
+      # ------------------------------------------------
+      # Step 3: Package the selected project
+      # ------------------------------------------------
+      - name: Create project ZIP
+        if: steps.changes.outputs.changed == 'true'
+        shell: bash
+        env:
+          PROJECT_PATH: ${{ matrix.project }}
+          ZIP_NAME: ${{ matrix.zip }}
+        run: |
+          set -euo pipefail
+
+          # Confirm that the project exists
+          test -d "$PROJECT_PATH"
+
+          # Confirm that a Vivado project file exists
+          test -n "$(find "$PROJECT_PATH" \
+            -type f -name '*.xpr' -print -quit)"
 
           mkdir -p dist
 
-          cd "$PARENT"
-          zip -qr "../dist/$PROJECT.zip" "$PROJECT"
-          cd ..
+          PROJECT_PARENT="$(dirname "$PROJECT_PATH")"
+          PROJECT_DIR="$(basename "$PROJECT_PATH")"
 
-          unzip -tqq "dist/$PROJECT.zip"
+          # Package only this project's directory
+          (
+            cd "$PROJECT_PARENT"
+            zip -qr "$GITHUB_WORKSPACE/dist/$ZIP_NAME" \
+              "$PROJECT_DIR"
+          )
 
+          # Verify ZIP archive integrity
+          unzip -tqq "dist/$ZIP_NAME"
+
+          echo "Created ZIP: $ZIP_NAME"
+
+      # ------------------------------------------------
+      # Step 4: Update the corresponding Release asset
+      # ------------------------------------------------
       - name: Update Release ZIP
+        if: steps.changes.outputs.changed == 'true'
+        shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
+          TAG_NAME: ${{ matrix.tag }}
+          ZIP_NAME: ${{ matrix.zip }}
         run: |
+          set -euo pipefail
+
+          # Confirm that the Release exists
+          gh release view "$TAG_NAME" > /dev/null
+
+          # Replace the existing ZIP attachment
           gh release upload \
-            "01-SPI_80M_EXTERNAL_LOOPBACK" \
-            "dist/01-SPI_80M_EXTERNAL_LOOPBACK.zip" \
+            "$TAG_NAME" \
+            "dist/$ZIP_NAME" \
             --clobber
+
+          echo "Release ZIP updated: $ZIP_NAME"
