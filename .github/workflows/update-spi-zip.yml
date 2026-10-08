@@ -1,0 +1,53 @@
+
+name: Update SPI 80M External Loopback ZIP
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '02-SPI Communication/01-SPI_80M_EXTERNAL_LOOPBACK/**'
+
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: spi-80m-external-loopback-release
+  cancel-in-progress: false
+
+jobs:
+  update-zip:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create project ZIP
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          PROJECT="01-SPI_80M_EXTERNAL_LOOPBACK"
+          PARENT="02-SPI Communication"
+
+          test -f "$PARENT/$PROJECT/spi_project/spi_project.xpr"
+
+          mkdir -p dist
+
+          cd "$PARENT"
+          zip -qr "../dist/$PROJECT.zip" "$PROJECT"
+          cd ..
+
+          unzip -tqq "dist/$PROJECT.zip"
+
+      - name: Update Release ZIP
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload \
+            "01-SPI_80M_EXTERNAL_LOOPBACK" \
+            "dist/01-SPI_80M_EXTERNAL_LOOPBACK.zip" \
+            --clobber
