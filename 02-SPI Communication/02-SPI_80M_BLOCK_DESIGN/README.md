@@ -4,7 +4,6 @@
 
 本版本将 `01-SPI_80M_EXTERNAL_LOOPBACK` 的 RTL 顶层集成迁移到 Block Design。当前综合顶层为 **`spi_bd_wrapper`**，Block Design 为 **`spi_bd`**。原 `spi_top.vhd` 仍在工程中保留，供对照使用。
 
-更新日期：2026-10-08。
 
 ## 1. 当前配置
 
@@ -235,7 +234,7 @@ CDC 例外针对 Slave 接收数据保持寄存器到主时钟域数据寄存器
 
 ### 实现后时序
 
-2026-09-30 实现结果，设计顶层为 `spi_bd_wrapper`，时序报告状态为 Routed：
+实现结果，设计顶层为 `spi_bd_wrapper`，时序报告状态为 Routed：
 
 | 指标 | 数值 |
 | --- | ---: |
@@ -255,7 +254,7 @@ CDC 例外针对 Slave 接收数据保持寄存器到主时钟域数据寄存器
 - 手动测试：Master TX = `A5`、Slave TX = `3C`，收到 Master RX = `3C`、Slave RX = `A5`。
 - 自动测试运行中的记录：`total_count = 58,145,536`，`master_error_count = 0`、`slave_error_count = 0`、`timeout_count = 0`。
 
-自动测试统计取自 2026-10-08 连续运行期间的观察记录，为阶段性结果。上述结果对应当前开发板、接线和实现配置。
+上述结果对应当前开发板、接线和实现配置。
 
 ## 9. MISO 采样相位选择
 
