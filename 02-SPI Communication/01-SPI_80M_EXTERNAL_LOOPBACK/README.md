@@ -1023,69 +1023,7 @@ Phase Sweep
 
 ---
 
-## 15. Dynamic Phase Shift 实验
-
-项目过程中曾尝试 Clock Wizard：
-
-```text
-Dynamic Phase Shift
-```
-
-实现上板后通过 VIO 实时改变 `clk_out2` 相位。
-
-动态移相控制本身已经验证：
-
-```text
-+1 step  OK
--1 step  OK
-PSDONE   OK
-LOCKED   OK
-```
-
-但该方案最终 **没有作为当前正式版本使用**。
-
-原因是：
-
-```text
-clk_out2
-↓
-MISO采样寄存器
-↓
-clk_out1主逻辑
-```
-
-存在真实跨时钟路径。
-
-运行时动态改变 `clk_out2` 后：
-
-```text
-clk_out2 与 clk_out1 的内部 Setup/Hold 关系也同时变化
-```
-
-因此动态扫描得到的错误可能同时包含：
-
-1. 外部 MISO 数据眼错误
-2. FPGA 内部跨时钟 Timing 错误
-
-二者无法干净区分。
-
-所以当前正式版本回到：
-
-```text
-Static Clock Wizard Phase
-+
-每个相位重新 Synthesis / Implementation
-+
-检查 Timing
-+
-上板压力测试
-```
-
-虽然速度较慢，但测试结果更可信。
-
----
-
-## 16. 当前项目结论
+## 15. 当前项目结论
 
 当前工程已经实现：
 
@@ -1152,7 +1090,7 @@ Hardware Test
 
 ---
 
-## 17. 重要说明
+## 16. 重要说明
 
 本工程中的：
 
